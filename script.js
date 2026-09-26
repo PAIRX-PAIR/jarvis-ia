@@ -370,34 +370,67 @@ function jarvis(command) {
         return "Puedo decirte la hora y la fecha, hacer cálculos, buscar en Google, buscar en YouTube, abrir páginas y recordar información básica.";
     }
 
-    return "He recibido tu comando, pero todavía no tengo una función para eso.";
+    return null;
 }
 
 // ==============================
 // ENVIAR COMANDO
 // ==============================
 
-function sendMessage() {
+async function sendMessage() {
     const command = input.value.trim();
 
     if (!command) return;
 
     addMessage(command, "user");
-
     input.value = "";
 
-    statusText.textContent =
-        "JARVIS está procesando...";
-
+    statusText.textContent = "JARVIS está procesando...";
     setState("thinking");
 
-    setTimeout(() => {
-        const response = jarvis(command);
+    // Primero intenta ejecutar los comandos locales de JARVIS
+    const localResponse = jarvis(command);
 
-        addMessage(response, "jarvis");
+    if (localResponse) {
+        addMessage(localResponse, "jarvis");
+        speak(localResponse);
+        return;
+    }
 
-        speak(response);
-    }, 400);
+    // Si JARVIS no conoce el comando, consulta la IA
+    try {
+        const response = await fetch("/api/chat", {
+            method: "POST",
+            headers: {
+                "Content-Type": "application/json"
+            },
+            body: JSON.stringify({
+                message: command
+            })
+        });
+
+        const data = await response.json();
+
+        if (!response.ok) {
+            throw new Error(data.error || "Error al conectar con la IA");
+        }
+
+        const aiResponse =
+            data.reply || "No pude generar una respuesta.";
+
+        addMessage(aiResponse, "jarvis");
+        speak(aiResponse);
+
+    } catch (error) {
+        console.error("Error JARVIS AI:", error);
+
+        const errorMessage =
+            "No pude conectarme con mi sistema de inteligencia artificial.";
+
+        addMessage(errorMessage, "jarvis");
+        speak(errorMessage);
+    }
+}
 }
 
 sendButton.addEventListener(
