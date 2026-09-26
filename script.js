@@ -431,7 +431,7 @@ async function sendMessage() {
         speak(errorMessage);
     }
 }
-}
+
 
 sendButton.addEventListener(
     "click",
