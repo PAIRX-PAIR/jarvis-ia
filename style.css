@@ -284,3 +284,37 @@ button:hover {
     }
 
 }
+
+/* Estados reactivos de JARVIS */
+.core { transition: filter .25s ease, transform .25s ease; }
+.core-center { transition: box-shadow .25s ease, background .25s ease; }
+
+body[data-jarvis-state="listening"] .core {
+    filter: brightness(1.35);
+    animation: corePulse .8s ease-in-out infinite alternate;
+}
+body[data-jarvis-state="listening"] .outer { animation-duration: 3s; }
+body[data-jarvis-state="listening"] .middle { animation-duration: 2s; }
+
+body[data-jarvis-state="thinking"] .outer { animation-duration: 2s; }
+body[data-jarvis-state="thinking"] .middle { animation-duration: 1.2s; }
+body[data-jarvis-state="thinking"] .core-center {
+    box-shadow: 0 0 55px #00d9ff, inset 0 0 45px #00d9ff;
+}
+
+body[data-jarvis-state="speaking"] .core-center {
+    animation: speakingPulse .45s ease-in-out infinite alternate;
+}
+
+@keyframes corePulse {
+    from { transform: scale(1); }
+    to { transform: scale(1.04); }
+}
+
+@keyframes speakingPulse {
+    from { box-shadow: 0 0 25px #00d9ff, inset 0 0 25px #00d9ff; }
+    to { box-shadow: 0 0 65px #00d9ff, inset 0 0 50px #00d9ff; }
+}
+
+button:disabled { opacity: .4; cursor: not-allowed; }
+#messages { scrollbar-width: thin; scrollbar-color: #00d9ff transparent; }
