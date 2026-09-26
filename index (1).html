@@ -1,0 +1,76 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>JARVIS AI</title>
+
+    <link rel="stylesheet" href="style.css">
+</head>
+
+<body>
+
+    <div class="background"></div>
+
+    <main class="jarvis">
+
+        <header>
+            <div class="status">
+                <span class="dot"></span>
+                SYSTEM ONLINE
+            </div>
+
+            <h1>J.A.R.V.I.S</h1>
+            <p>JUST A RATHER VERY INTELLIGENT SYSTEM</p>
+        </header>
+
+        <section class="core">
+
+            <div class="circle outer"></div>
+            <div class="circle middle"></div>
+
+            <div class="core-center">
+                <span>J</span>
+            </div>
+
+        </section>
+
+        <section class="voice-status">
+            <p id="status">Esperando comando...</p>
+        </section>
+
+        <section class="chat">
+
+            <div id="messages">
+                <div class="message jarvis-message">
+                    Hola. Soy JARVIS. ¿En qué puedo ayudarte?
+                </div>
+            </div>
+
+            <div class="input-area">
+
+                <input
+                    id="userInput"
+                    type="text"
+                    placeholder="Escribe un comando..."
+                >
+
+                <button id="sendButton">
+                    ➤
+                </button>
+
+                <button id="micButton">
+                    🎙️
+                </button>
+
+            </div>
+
+        </section>
+
+    </main>
+
+    <script src="script.js"></script>
+
+</body>
+</html>
